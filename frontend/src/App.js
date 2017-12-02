@@ -1,19 +1,30 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+/* @flow */
+import * as React from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-class App extends Component {
+import { Home, Category, PostDetails, CreateEdit } from './screens';
+
+const Wrapper = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1240px;
+`;
+
+type Props = {};
+type State = {};
+
+class App extends React.Component<Props, State> {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <Router>
+        <Wrapper>
+          <Route exact path="/" component={Home} />
+          <Route path="/categories/:category" component={Category} />
+          <Route path="/categories/:category/posts" component={CreateEdit} />
+          <Route path="/categories/:category/posts/:postId" component={PostDetails} />
+        </Wrapper>
+      </Router>
     );
   }
 }
