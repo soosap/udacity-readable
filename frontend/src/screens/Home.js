@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 
 import { getAllPosts, getAllCategories } from '../selectors';
-import { BlogEntry, Tag } from '../components';
+import { BlogEntry, Tag, Button } from '../components';
 import type { Dispatch, Post, Category } from '../utils/types';
 
 const Wrapper = styled.div`
@@ -17,6 +17,22 @@ const Wrapper = styled.div`
 const Categories = styled.div`
   display: flex;
   margin-bottom: .6rem;
+`;
+
+const Entries = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Buttons = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1.5rem;
+  padding-right: 1rem;
+`;
+
+const Icon = styled.i`
+  color: white;
 `;
 
 type Props = {
@@ -50,14 +66,21 @@ class Home extends React.Component<Props, State> {
             </Tag>
           ))}
         </Categories>
-        {posts.map(post => (
-          <BlogEntry
-            key={post.id}
-            {...post}
-            upVote={this.upVote}
-            downVote={this.downVote}
-          />
-        ))}
+        <Entries>
+          {posts.map(post => (
+            <BlogEntry
+              key={post.id}
+              {...post}
+              upVote={this.upVote}
+              downVote={this.downVote}
+            />
+          ))}
+        </Entries>
+        <Buttons>
+          <Button circular>
+            <Icon className="fa fa-plus fa-2x" aria-hidden="true" />
+          </Button>
+        </Buttons>
       </Wrapper>
     );
   }
