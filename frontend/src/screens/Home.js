@@ -3,13 +3,15 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
-import type { Dispatch } from '../utils/types';
+import type { Dispatch, Posts } from '../utils/types';
 
 const Wrapper = styled.div``;
 
 type Props = {
   dispatch: Dispatch,
+  posts: Posts,
 };
+
 type State = {};
 
 class Home extends React.Component<Props, State> {
@@ -20,10 +22,15 @@ class Home extends React.Component<Props, State> {
   state = {};
 
   render() {
-    return (
-      <Wrapper>Home</Wrapper>
-    );
+    console.log('this.props.posts', this.props.posts);
+    return <Wrapper>Home</Wrapper>;
   }
 }
 
-export default connect()(Home);
+const mapStateToProps = state => {
+  return {
+    posts: state.posts,
+  };
+};
+
+export default connect(mapStateToProps)(Home);

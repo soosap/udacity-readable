@@ -34,13 +34,11 @@ type PostsFetchRequestAction = { type: 'POSTS_FETCH_REQUEST' };
 
 type PostsFetchSuccessAction = {
   type: 'POSTS_FETCH_SUCCESS',
-  payload: {
-    posts: Posts,
-  },
+  payload: Posts,
 };
 
 /* eslint-disable no-use-before-define */
-export type Action = PostsFetchRequestAction;
+export type Action = PostsFetchRequestAction | PostsFetchSuccessAction;
 export type ActionType = $PropertyType<Action, 'type'>;
 
 export type State = Object;

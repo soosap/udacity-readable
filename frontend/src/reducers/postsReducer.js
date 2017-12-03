@@ -7,6 +7,8 @@ type State = {
 
 export default function(state: State = {}, action: Action) {
   switch (action.type) {
+    case 'POSTS_FETCH_SUCCESS':
+      return action.payload;
     default:
       return state;
   }
