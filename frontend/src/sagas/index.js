@@ -1,8 +1,24 @@
 /* @flow */
-import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
+import { takeLatest } from 'redux-saga/effects';
+import type { ActionType } from '../utils/types';
 
-function* rootSaga() {
-  // yield takeLatest('USER_FETCH_REQUESTED', fetchUser);
+/*
+|-----------------------------------------------------------
+| Worker sagas
+|-----------------------------------------------------------
+*/
+import fetchPosts from './fetchPosts';
+
+/*
+|-----------------------------------------------------------
+| Root saga
+|-----------------------------------------------------------
+*/
+let type: ActionType;
+
+function* rootSaga(): Generator<*, *, *> {
+  type = 'POSTS_FETCH_REQUESTED';
+  yield takeLatest(type, fetchPosts);
 }
 
 export default rootSaga;
