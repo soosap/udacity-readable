@@ -8,6 +8,7 @@ export type Post = {
   category: string,
   voteScore: number,
   deleted: boolean,
+  commentCount: number,
 };
 
 export type Posts = { [key: $PropertyType<Post, 'id'>]: Post };
