@@ -13,7 +13,7 @@ const getCategories = () => {
 function* fetchCategories(action: Action): Generator<*, *, *> {
   const response = yield call(getCategories);
 
-  const categories: Categories = response.data.reduce((acc, category) => {
+  const categories: Categories = response.data.categories.reduce((acc, category) => {
     acc[category.name] = category;
     return acc;
   }, {});

@@ -3,9 +3,9 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
-import { getAllPosts } from '../selectors';
-import { BlogEntry } from '../components';
-import type { Dispatch, Post } from '../utils/types';
+import { getAllPosts, getAllCategories } from '../selectors';
+import { BlogEntry, Tag } from '../components';
+import type { Dispatch, Post, Category } from '../utils/types';
 
 const Wrapper = styled.div`
   padding: 2rem;
@@ -14,9 +14,15 @@ const Wrapper = styled.div`
   margin-right: auto;
 `;
 
+const Categories = styled.div`
+  display: flex;
+  margin-bottom: .6rem;
+`;
+
 type Props = {
   dispatch: Dispatch,
   posts: Array<Post>,
+  categories: Array<Category>,
 };
 
 type State = {};
@@ -34,9 +40,16 @@ class Home extends React.Component<Props, State> {
   downVote = () => {};
 
   render() {
-    const { posts } = this.props;
+    const { posts, categories } = this.props;
     return (
       <Wrapper>
+        <Categories>
+          {categories.map(category => (
+            <Tag key={category.name} to={`/categories/${category.path}`}>
+              {category.name}
+            </Tag>
+          ))}
+        </Categories>
         {posts.map(post => (
           <BlogEntry
             key={post.id}
@@ -53,6 +66,7 @@ class Home extends React.Component<Props, State> {
 const mapStateToProps = state => {
   return {
     posts: getAllPosts(state),
+    categories: getAllCategories(state),
   };
 };
 
