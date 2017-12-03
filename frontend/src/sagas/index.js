@@ -8,6 +8,7 @@ import type { ActionType } from '../utils/types';
 |-----------------------------------------------------------
 */
 import fetchPosts from './fetchPosts';
+import fetchCategories from './fetchCategories';
 
 /*
 |-----------------------------------------------------------
@@ -19,6 +20,9 @@ let type: ActionType;
 function* rootSaga(): Generator<*, *, *> {
   type = 'POSTS_FETCH_REQUEST';
   yield takeLatest(type, fetchPosts);
+
+  type = 'CATEGORIES_FETCH_REQUEST';
+  yield takeLatest(type, fetchCategories);
 }
 
 export default rootSaga;

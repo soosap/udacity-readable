@@ -1,4 +1,11 @@
 /* @flow */
+export type Category = {
+  name: string,
+  path: string,
+};
+
+export type Categories = { [key: $PropertyType<Category, 'name'>]: Category };
+
 export type Post = {
   id: string,
   timestamp: number,
@@ -38,8 +45,19 @@ type PostsFetchSuccessAction = {
   payload: Posts,
 };
 
+type CategoriesFetchRequestAction = { type: 'CATEGORIES_FETCH_REQUEST' };
+
+type CategoriesFetchSuccessAction = {
+  type: 'CATEGORIES_FETCH_SUCCESS',
+  payload: Categories,
+};
+
 /* eslint-disable no-use-before-define */
-export type Action = PostsFetchRequestAction | PostsFetchSuccessAction;
+export type Action =
+  | PostsFetchRequestAction
+  | PostsFetchSuccessAction
+  | CategoriesFetchRequestAction
+  | CategoriesFetchSuccessAction;
 export type ActionType = $PropertyType<Action, 'type'>;
 
 export type State = Object;

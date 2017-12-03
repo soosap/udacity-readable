@@ -24,15 +24,29 @@ type State = {};
 class Home extends React.Component<Props, State> {
   componentDidMount() {
     this.props.dispatch({ type: 'POSTS_FETCH_REQUEST' });
+    this.props.dispatch({ type: 'CATEGORIES_FETCH_REQUEST' });
   }
 
   state = {};
 
+  upVote = () => {};
+
+  downVote = () => {};
+
   render() {
     const { posts } = this.props;
-    return (<Wrapper>
-      {posts.map(post => <BlogEntry key={post.id} {...post} />)}
-    </Wrapper>);
+    return (
+      <Wrapper>
+        {posts.map(post => (
+          <BlogEntry
+            key={post.id}
+            {...post}
+            upVote={this.upVote}
+            downVote={this.downVote}
+          />
+        ))}
+      </Wrapper>
+    );
   }
 }
 
