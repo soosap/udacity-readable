@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 
 import { getAllPosts, getAllCategories } from '../selectors';
-import { BlogEntry, Tag, Button } from '../components';
+import { BlogEntry, Tag, Button, Switch } from '../components';
 import type { Dispatch, Post, Category } from '../utils/types';
 
 const Wrapper = styled.div`
@@ -14,9 +14,27 @@ const Wrapper = styled.div`
   margin-right: auto;
 `;
 
-const Categories = styled.div`
+const Header = styled.div`
   display: flex;
-  margin-bottom: .6rem;
+`;
+
+const Filters = styled.div`
+  padding-left: 1rem;
+  margin-bottom: .5rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+
+  i {
+    padding-bottom: .15rem;
+  }
+`;
+
+const Categories = styled.div`
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 0.3rem;
 `;
 
 const Entries = styled.div`
@@ -41,7 +59,9 @@ type Props = {
   categories: Array<Category>,
 };
 
-type State = {};
+type State = {
+  sortedBy: 'score' | 'date',
+};
 
 class Home extends React.Component<Props, State> {
   componentDidMount() {
@@ -49,7 +69,9 @@ class Home extends React.Component<Props, State> {
     this.props.dispatch({ type: 'CATEGORIES_FETCH_REQUEST' });
   }
 
-  state = {};
+  state = {
+    sortedBy: 'score',
+  };
 
   upVote = () => {};
 
@@ -59,13 +81,29 @@ class Home extends React.Component<Props, State> {
     const { posts, categories } = this.props;
     return (
       <Wrapper>
-        <Categories>
-          {categories.map(category => (
-            <Tag key={category.name} to={`/categories/${category.path}`}>
-              {category.name}
-            </Tag>
-          ))}
-        </Categories>
+        <Header>
+          <Categories>
+            {categories.map(category => (
+              <Tag key={category.name} to={`/categories/${category.path}`}>
+                {category.name}
+              </Tag>
+            ))}
+          </Categories>
+          <Filters>
+            <i className="fa fa-filter" aria-hidden="true" />
+            <Switch
+              left="score"
+              handleClickLeft={() => {
+                this.setState({ sortedBy: 'score' });
+              }}
+              handleClickRight={() => {
+                this.setState({ sortedBy: 'date' });
+              }}
+              right="date"
+              active={this.state.sortedBy === 'score' ? 'left' : 'right'}
+            />
+          </Filters>
+        </Header>
         <Entries>
           {posts.map(post => (
             <BlogEntry

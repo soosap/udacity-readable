@@ -11,6 +11,7 @@ const Wrapper = styled(Link)`
   font-size: .8rem;
   color: black;
   margin-right: .3rem;
+  margin-bottom: .3rem;
   text-decoration: none;
 `;
 

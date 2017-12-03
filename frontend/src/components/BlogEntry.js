@@ -8,6 +8,8 @@ import type { Post } from '../utils/types';
 type Props = Post & {
   upVote: (id: $PropertyType<Post, 'id'>) => void,
   downVote: (id: $PropertyType<Post, 'id'>) => void,
+  deletePost: (id: $PropertyType<Post, 'id'>) => void,
+  editPost: (id: $PropertyType<Post, 'id'>) => void,
 };
 
 const Wrapper = styled.div`
@@ -35,12 +37,22 @@ const Aside = styled.aside`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: .5rem;
+  padding-top: 0.5rem;
 `;
 
 const Title = styled.div`
   font-weight: 600;
   font-size: 1.1rem;
+`;
+
+const Icon = styled.i`
+  padding-left: .1rem;
+  padding-right: .3rem;
+  font-size: 14px !important;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Subtitle = styled.div``;
@@ -58,6 +70,8 @@ const BlogEntry = ({
   timestamp,
   upVote,
   downVote,
+  deletePost,
+  editPost,
 }: Props) => {
   return (
     <Wrapper>
@@ -66,6 +80,10 @@ const BlogEntry = ({
         <Subtitle>
           posted by <Author>{author}</Author> {moment(timestamp).fromNow()} |{' '}
           {commentCount} comments
+          |{' '}
+          <Icon onClick={() => editPost(id)} className="fa fa-edit" aria-hidden="true" />
+          |{' '}
+          <Icon onClick={() => deletePost(id)} className="fa fa-trash" aria-hidden="true" />
         </Subtitle>
       </Main>
       <Aside>
