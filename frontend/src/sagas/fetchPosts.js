@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { call } from 'redux-saga/effects';
 
-import type { Action, Posts } from '../utils/types';
+import type { Action } from '../utils/types';
 
 const getPosts = () => {
   return axios.get('/api/posts', { headers: { Authorization: 'somethingsomething' } })
