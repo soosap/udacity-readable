@@ -1,9 +1,19 @@
 /* @flow */
-import type { Action } from '../utils/types';
+import axios from 'axios';
+import { call } from 'redux-saga/effects';
+
+import type { Action, Posts } from '../utils/types';
+
+const getPosts = () => {
+  return axios.get('/api/posts', { headers: { Authorization: 'somethingsomething' } })
+};
 
 function* fetchPosts(action: Action) {
-  console.log('TODO: fetch the data', action);
-  yield;
+  const response = yield call(getPosts);
+
+  console.log('response', response);
+  // const success: Action = { type: 'POSTS_FETCH_SUCCESS', payload: { posts } };
+  // yield put(success);
 }
 
 export default fetchPosts;

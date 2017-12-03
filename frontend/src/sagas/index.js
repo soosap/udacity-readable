@@ -17,7 +17,7 @@ import fetchPosts from './fetchPosts';
 let type: ActionType;
 
 function* rootSaga(): Generator<*, *, *> {
-  type = 'POSTS_FETCH_REQUESTED';
+  type = 'POSTS_FETCH_REQUEST';
   yield takeLatest(type, fetchPosts);
 }
 

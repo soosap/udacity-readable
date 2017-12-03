@@ -14,7 +14,7 @@ type State = {};
 
 class Home extends React.Component<Props, State> {
   componentDidMount() {
-    this.props.dispatch({ type: 'POSTS_FETCH_REQUESTED' });
+    this.props.dispatch({ type: 'POSTS_FETCH_REQUEST' });
   }
 
   state = {};
