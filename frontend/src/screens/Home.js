@@ -3,13 +3,20 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
-import type { Dispatch, Posts } from '../utils/types';
+import { getAllPosts } from '../selectors';
+import { BlogEntry } from '../components';
+import type { Dispatch, Post } from '../utils/types';
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  padding: 2rem;
+  max-width: 992px;
+  margin-left: auto;
+  margin-right: auto;
+`;
 
 type Props = {
   dispatch: Dispatch,
-  posts: Posts,
+  posts: Array<Post>,
 };
 
 type State = {};
@@ -22,14 +29,16 @@ class Home extends React.Component<Props, State> {
   state = {};
 
   render() {
-    console.log('this.props.posts', this.props.posts);
-    return <Wrapper>Home</Wrapper>;
+    const { posts } = this.props;
+    return (<Wrapper>
+      {posts.map(post => <BlogEntry key={post.id} {...post} />)}
+    </Wrapper>);
   }
 }
 
 const mapStateToProps = state => {
   return {
-    posts: state.posts,
+    posts: getAllPosts(state),
   };
 };
 

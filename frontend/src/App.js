@@ -1,7 +1,7 @@
 /* @flow */
 import * as React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { injectGlobal } from 'styled-components';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
@@ -15,6 +15,24 @@ const Wrapper = styled.div`
   margin-right: auto;
   max-width: 1240px;
 `;
+
+/*
+|-----------------------------------------------------------
+| Global styles
+|-----------------------------------------------------------
+*/
+injectGlobal([
+  `
+  @import url('https://fonts.googleapis.com/css?family=Catamaran');
+
+  html, body {
+    font-family: 'Catamaran', sans-serif;
+    margin: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+`,
+]);
 
 /*
 |-----------------------------------------------------------
