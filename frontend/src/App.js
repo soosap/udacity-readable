@@ -6,7 +6,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 
-import { Home, PostDetails, CreateEdit } from './screens';
+import { Home, PostDetails, PostCreate } from './screens';
 import reducers from './reducers';
 import sagas from './sagas';
 
@@ -26,7 +26,7 @@ injectGlobal([
   @import url('https://fonts.googleapis.com/css?family=Catamaran');
 
   html, body {
-    font-family: 'Catamaran', sans-serif;
+    font-family: 'Catamaran', sans-serif !important;
     margin: 0;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -65,8 +65,8 @@ class App extends React.Component<Props, State> {
           <Wrapper>
             <Route exact path="/" component={Home} />
             <Switch>
-              <Route path="/posts/create" component={CreateEdit} />
-              <Route path="/posts/:postId/edit" component={CreateEdit} />            
+              <Route path="/posts/create" component={PostCreate} />
+              <Route path="/posts/:postId/edit" component={PostCreate} />            
               <Route
                 path="/category/:postId"
                 component={PostDetails}

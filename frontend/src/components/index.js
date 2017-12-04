@@ -5,3 +5,4 @@ export * from './BlogEntry';
 export * from './BlogEntryComment';
 export * from './Switch';
 export * from './Back';
+export { default as PostCreateForm } from './PostCreateForm';

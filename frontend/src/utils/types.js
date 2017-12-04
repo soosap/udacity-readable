@@ -12,7 +12,7 @@ export type Post = {
   title: string,
   body: string,
   author: string,
-  category: string,
+  category: $PropertyType<Category, 'name'>,
   voteScore: number,
   deleted: boolean,
   commentCount: number,
@@ -54,6 +54,15 @@ export type PostFetchRequestAction = {
 export type PostFetchSuccessAction = {
   type: 'POST_FETCH_SUCCESS',
   payload: { post: Post, comments: Comments },
+};
+
+export type PostCreateRequestAction = {
+  type: 'POST_CREATE_REQUEST',
+  payload: $Subtype<Post>,
+};
+export type PostCreateSuccessAction = {
+  type: 'POST_CREATE_SUCCESS',
+  payload: Post,
 };
 
 export type PostCastVoteRequestAction = {
@@ -114,6 +123,8 @@ export type Action =
   | PostCastVoteSuccessAction
   | PostDeleteRequestAction
   | PostDeleteSuccessAction
+  | PostCreateRequestAction
+  | PostCreateSuccessAction
   | CommentCastVoteRequestAction
   | CommentCastVoteSuccessAction
   | CommentDeleteRequestAction
