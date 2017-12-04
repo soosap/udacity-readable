@@ -3,10 +3,10 @@ import * as React from 'react';
 import * as R from 'ramda';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+import { withRouter, Link } from 'react-router-dom';
 import { compose } from 'recompose';
 
-import { getAllPosts, getAllCategories } from '../selectors';
+import { getPostsByCategory, getAllCategories } from '../selectors';
 import { BlogEntry, Tag, Button, Switch } from '../components';
 import type { Dispatch, Post, Category } from '../utils/types';
 
@@ -56,11 +56,20 @@ const Icon = styled.i`
   color: white;
 `;
 
+const Back = styled(Link)`
+  text-decoration: none;
+  color: gray;
+  display: inline-block;
+  padding-right: 0.5rem;
+  margin-top: 2px;
+`;
+
 type Props = {
   dispatch: Dispatch,
   posts: Array<Post>,
   categories: Array<Category>,
   history: Object,
+  match: Object,
 };
 
 type State = {
@@ -69,7 +78,10 @@ type State = {
 
 class Home extends React.Component<Props, State> {
   componentDidMount() {
-    this.props.dispatch({ type: 'POSTS_FETCH_REQUEST' });
+    this.props.dispatch({
+      type: 'POSTS_FETCH_REQUEST',
+      payload: this.props.match.params.category,
+    });
     this.props.dispatch({ type: 'CATEGORIES_FETCH_REQUEST' });
   }
 
@@ -108,6 +120,9 @@ class Home extends React.Component<Props, State> {
     return (
       <Wrapper>
         <Header>
+          {this.props.match.params.category && (
+            <Back to="/" className="fa fa-arrow-left" aria-hidden="true" />
+          )}
           <Categories>
             {categories.map(category => (
               <Tag key={category.name} to={`/${category.path}`}>
@@ -162,9 +177,9 @@ class Home extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, props) => {
   return {
-    posts: getAllPosts(state),
+    posts: getPostsByCategory(state, props.match.params.category),
     categories: getAllCategories(state),
   };
 };

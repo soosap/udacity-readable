@@ -2,21 +2,30 @@
 import axios from 'axios';
 import { call, put } from 'redux-saga/effects';
 
-import type { Action, Posts } from '../utils/types';
+import type {
+  PostsFetchRequestAction,
+  PostsFetchSuccessAction,
+  Posts,
+} from '../utils/types';
 
-const getPosts = () => {
-  return axios.get('/api/posts', { headers: { Authorization: 'somethingsomething' } })
+const getPosts = (category?: string) => {
+  return axios.get(category ? `/api/${category}/posts` : '/api/posts', {
+    headers: { Authorization: 'somethingsomething' },
+  });
 };
 
-function* fetchPosts(action: Action): Generator<*, *, *> {
-  const response = yield call(getPosts);
+function* fetchPosts(action: PostsFetchRequestAction): Generator<*, *, *> {
+  const response = yield call(getPosts, action.payload);
 
   const posts: Posts = response.data.reduce((acc, post) => {
     acc[post.id] = post;
     return acc;
   }, {});
 
-  const success: Action = { type: 'POSTS_FETCH_SUCCESS', payload: posts };
+  const success: PostsFetchSuccessAction = {
+    type: 'POSTS_FETCH_SUCCESS',
+    payload: posts,
+  };
   yield put(success);
 }
 

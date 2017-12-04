@@ -38,8 +38,8 @@ export type Comments = { [key: $PropertyType<Comment, 'id'>]: Comment };
 | Redux-related type definitions
 |-----------------------------------------------------------
 */
-type PostsFetchRequestAction = { type: 'POSTS_FETCH_REQUEST' };
-type PostsFetchSuccessAction = {
+export type PostsFetchRequestAction = { type: 'POSTS_FETCH_REQUEST', payload?: string };
+export type PostsFetchSuccessAction = {
   type: 'POSTS_FETCH_SUCCESS',
   payload: Posts,
 };

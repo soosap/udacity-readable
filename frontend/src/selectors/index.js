@@ -1,3 +1,3 @@
 /* @flow */
-export * from './getAllPosts';
+export * from './getPostsByCategory';
 export * from './getAllCategories';

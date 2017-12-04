@@ -2,5 +2,5 @@
 import * as R from 'ramda';
 import type { State } from '../utils/types';
 
-export const getAllPosts = (state: State) =>
+export const getPostsByCategory = (state: State, category: string) =>
   R.map(id => state.posts[id], R.keys(state.posts));
