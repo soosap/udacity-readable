@@ -78,7 +78,7 @@ const BlogEntry = ({
   return (
     <Wrapper>
       <Main>
-        <Title to={`/posts/${id}`}>{title}</Title>
+        <Title to={`/category/${id}`}>{title}</Title>
         <Subtitle>
           posted by <Author>{author}</Author> {moment(timestamp).fromNow()} |{' '}
           {commentCount} comments
