@@ -1,8 +1,16 @@
 /* @flow */
 import * as R from 'ramda';
-import type { State } from '../utils/types';
+import { createSelector } from 'reselect';
 
-const commentsForPost = (state: State, postId: string) =>
-  R.filter(id => state.comments[id].parentId === postId, R.keys(state.comments));
+import commentsSelector from './comments';
+const postIdSelector = (state, postId) => postId;
 
-  export default commentsForPost;
+const commentsForPost = createSelector(
+  commentsSelector,
+  postIdSelector,
+  (comments, postId) => {
+    return R.filter(R.propEq('parentId', postId), comments)
+  }
+);
+
+export default commentsForPost;

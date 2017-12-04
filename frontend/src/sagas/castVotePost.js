@@ -8,9 +8,13 @@ import type {
 } from '../utils/types';
 
 const submitVoteCast = ({ id, direction }) => {
-  return axios.post(`/api/posts/${id}`, { option: direction }, {
-    headers: { Authorization: 'somethingsomething' },
-  });
+  return axios.post(
+    `/api/posts/${id}`,
+    { option: direction },
+    {
+      headers: { Authorization: 'somethingsomething' },
+    },
+  );
 };
 
 function* castVote(action: PostCastVoteRequestAction): Generator<*, *, *> {

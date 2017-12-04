@@ -1,11 +1,12 @@
 /* @flow */
 import * as React from 'react';
+import * as R from 'ramda';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 
-import { BlogEntry, Back } from '../components';
+import { BlogEntry, Back, BlogEntryComment, Button } from '../components';
 import { postById, commentsForPost } from '../selectors';
 import type { Dispatch, Post, Comment } from '../utils/types';
 
@@ -19,7 +20,28 @@ const Wrapper = styled.div`
 `;
 
 const Header = styled.div`
-  margin-bottom: .8rem;
+  margin-bottom: 0.8rem;
+`;
+
+const Main = styled.main``;
+
+const Body = styled.div`
+  display: flex;
+
+  > button {
+    margin: 1.5rem;
+  }
+`;
+
+const Comments = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+`;
+
+const Icon = styled.i`
+  color: white;
 `;
 
 type Props = {
@@ -29,7 +51,9 @@ type Props = {
   history: Object,
   comments: Array<Comment>,
 };
-type State = {};
+type State = {
+  showCommentBox: boolean,
+};
 
 class PostDetails extends React.Component<Props, State> {
   componentDidMount() {
@@ -39,18 +63,34 @@ class PostDetails extends React.Component<Props, State> {
     });
   }
 
-  state = {};
+  state = {
+    showCommentBox: false,
+  };
 
-  upVote = (id: $PropertyType<Post, 'id'>) => {
+  upVotePost = (id: $PropertyType<Post, 'id'>) => {
     this.props.dispatch({
       type: 'POST_CAST_VOTE_REQUEST',
       payload: { direction: 'upVote', id },
     });
   };
 
-  downVote = (id: $PropertyType<Post, 'id'>) => {
+  downVotePost = (id: $PropertyType<Post, 'id'>) => {
     this.props.dispatch({
       type: 'POST_CAST_VOTE_REQUEST',
+      payload: { direction: 'downVote', id },
+    });
+  };
+
+  upVoteComment = (id: $PropertyType<Comment, 'id'>) => {
+    this.props.dispatch({
+      type: 'COMMENT_CAST_VOTE_REQUEST',
+      payload: { direction: 'upVote', id },
+    });
+  };
+
+  downVoteComment = (id: $PropertyType<Comment, 'id'>) => {
+    this.props.dispatch({
+      type: 'COMMENT_CAST_VOTE_REQUEST',
       payload: { direction: 'downVote', id },
     });
   };
@@ -66,21 +106,54 @@ class PostDetails extends React.Component<Props, State> {
     this.props.history.push(`/posts/${id}/edit`);
   };
 
+  deleteComment = (id: $PropertyType<Comment, 'id'>) => {
+    this.props.dispatch({ type: 'COMMENT_DELETE_REQUEST', payload: id });
+  };
+
+  editComment = (id: $PropertyType<Comment, 'id'>) => {};
+
+  openCommentBox = () => {
+    console.log('opening comment box');
+    this.setState({ showCommentBox: true });
+  };
+
   render() {
-    const { post } = this.props;
+    const { post, comments } = this.props;
     return (
       <Wrapper>
         <Header>
           <Back to="/">Back</Back>
         </Header>
-        <BlogEntry
-          {...post}
-          upVote={this.upVote}
-          downVote={this.downVote}
-          deletePost={this.deletePost}
-          editPost={this.editPost}
-          showBody
-        />
+        <Main>
+          <BlogEntry
+            {...post}
+            upVote={this.upVotePost}
+            downVote={this.downVotePost}
+            deletePost={this.deletePost}
+            editPost={this.editPost}
+            showBody
+          />
+        </Main>
+        <Body>
+          <Button circular onClick={this.openCommentBox}>
+            <Icon className="fa fa-plus fa-2x" aria-hidden="true" />
+          </Button>
+          <Comments>
+            {R.compose(
+              R.map(comment => (
+                <BlogEntryComment
+                  key={comment.id}
+                  {...comment}
+                  deleteComment={this.deleteComment}
+                  editComment={this.editComment}
+                  upVote={this.upVoteComment}
+                  downVote={this.downVoteComment}
+                />
+              )),
+              R.filter(R.propEq('deleted', false)),
+            )(comments)}
+          </Comments>
+        </Body>
       </Wrapper>
     );
   }

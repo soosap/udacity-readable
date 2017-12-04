@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  &:last-child {
+  &:last-of-type {
     border-bottom: 1px solid gray;
   }
 `;

@@ -108,13 +108,12 @@ class Home extends React.Component<Props, State> {
 
   render() {
     const { posts, categories, history } = this.props;
-    console.log('posts', posts);
 
     return (
       <Wrapper>
         <Header>
           {this.props.match.params.category && (
-            <Back to="/" className="fa fa-arrow-left" aria-hidden="true" />
+            <Back to="/" />
           )}
           <Categories>
             {categories.map(category => (

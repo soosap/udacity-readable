@@ -47,7 +47,6 @@ export type PostsFetchSuccessAction = {
   payload: Posts,
 };
 
-
 export type PostFetchRequestAction = {
   type: 'POST_FETCH_REQUEST',
   payload: $PropertyType<Post, 'id'>,
@@ -56,7 +55,6 @@ export type PostFetchSuccessAction = {
   type: 'POST_FETCH_SUCCESS',
   payload: { post: Post, comments: Comments },
 };
-
 
 export type PostCastVoteRequestAction = {
   type: 'POST_CAST_VOTE_REQUEST',
@@ -67,7 +65,6 @@ export type PostCastVoteSuccessAction = {
   payload: { direction: 'upVote' | 'downVote', id: $PropertyType<Post, 'id'> },
 };
 
-
 export type PostDeleteRequestAction = {
   type: 'POST_DELETE_REQUEST',
   payload: $PropertyType<Post, 'id'>,
@@ -77,6 +74,29 @@ export type PostDeleteSuccessAction = {
   payload: $PropertyType<Post, 'id'>,
 };
 
+export type CommentCastVoteRequestAction = {
+  type: 'COMMENT_CAST_VOTE_REQUEST',
+  payload: {
+    direction: 'upVote' | 'downVote',
+    id: $PropertyType<Comment, 'id'>,
+  },
+};
+export type CommentCastVoteSuccessAction = {
+  type: 'COMMENT_CAST_VOTE_SUCCESS',
+  payload: {
+    direction: 'upVote' | 'downVote',
+    id: $PropertyType<Comment, 'id'>,
+  },
+};
+
+export type CommentDeleteRequestAction = {
+  type: 'COMMENT_DELETE_REQUEST',
+  payload: $PropertyType<Comment, 'id'>,
+};
+export type CommentDeleteSuccessAction = {
+  type: 'COMMENT_DELETE_SUCCESS',
+  payload: $PropertyType<Comment, 'id'>,
+};
 
 type CategoriesFetchRequestAction = { type: 'CATEGORIES_FETCH_REQUEST' };
 type CategoriesFetchSuccessAction = {
@@ -94,6 +114,10 @@ export type Action =
   | PostCastVoteSuccessAction
   | PostDeleteRequestAction
   | PostDeleteSuccessAction
+  | CommentCastVoteRequestAction
+  | CommentCastVoteSuccessAction
+  | CommentDeleteRequestAction
+  | CommentDeleteSuccessAction
   | CategoriesFetchRequestAction
   | CategoriesFetchSuccessAction;
 export type ActionType = $PropertyType<Action, 'type'>;

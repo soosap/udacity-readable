@@ -9,8 +9,10 @@ import type { ActionType } from '../utils/types';
 */
 import fetchPosts from './fetchPosts';
 import fetchCategories from './fetchCategories';
-import castVote from './castVote';
+import castVotePost from './castVotePost';
+import castVoteComment from './castVoteComment';
 import deletePost from './deletePost';
+import deleteComment from './deleteComment';
 import fetchPostDetails from './fetchPostDetails';
 
 /*
@@ -28,10 +30,16 @@ function* rootSaga(): Generator<*, *, *> {
   yield takeLatest(type, fetchPosts);
 
   type = 'POST_CAST_VOTE_REQUEST';
-  yield takeEvery(type, castVote);
+  yield takeEvery(type, castVotePost);
 
   type = 'POST_DELETE_REQUEST';
   yield takeLatest(type, deletePost);
+
+  type = 'COMMENT_CAST_VOTE_REQUEST';
+  yield takeEvery(type, castVoteComment);
+
+  type = 'COMMENT_DELETE_REQUEST';
+  yield takeLatest(type, deleteComment);
 
   type = 'CATEGORIES_FETCH_REQUEST';
   yield takeLatest(type, fetchCategories);
