@@ -64,7 +64,6 @@ class App extends React.Component<Props, State> {
         <Router>
           <Wrapper>
             <Route exact path="/" component={Home} />
-            <Route path="/categories/:category" component={Category} />
             <Switch>
               <Route path="/posts/create" component={CreateEdit} />
               <Route path="/posts/:postId/edit" component={CreateEdit} />            
@@ -72,6 +71,7 @@ class App extends React.Component<Props, State> {
                 path="/posts/:postId"
                 component={PostDetails}
               />
+              <Route path="/:category" component={Category} />              
             </Switch>
           </Wrapper>
         </Router>

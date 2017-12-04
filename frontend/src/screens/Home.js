@@ -110,7 +110,7 @@ class Home extends React.Component<Props, State> {
         <Header>
           <Categories>
             {categories.map(category => (
-              <Tag key={category.name} to={`/categories/${category.path}`}>
+              <Tag key={category.name} to={`/${category.path}`}>
                 {category.name}
               </Tag>
             ))}
