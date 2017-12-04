@@ -93,7 +93,10 @@ class Home extends React.Component<Props, State> {
   };
 
   deletePost = (id: $PropertyType<Post, 'id'>) => {
-    console.log('delete post');
+    this.props.dispatch({
+      type: 'POST_DELETE_REQUEST',
+      payload: id,
+    });
   };
 
   editPost = (id: $PropertyType<Post, 'id'>) => {
@@ -129,23 +132,26 @@ class Home extends React.Component<Props, State> {
           </Filters>
         </Header>
         <Entries>
-          {R.sort(
-            R.descend(
-              R.prop(
-                this.state.sortedBy === 'score' ? 'voteScore' : 'timestamp',
+          {R.compose(
+            R.map(post => (
+              <BlogEntry
+                key={post.id}
+                {...post}
+                upVote={this.upVote}
+                downVote={this.downVote}
+                deletePost={this.deletePost}
+                editPost={this.editPost}
+              />
+            )),
+            R.sort(
+              R.descend(
+                R.prop(
+                  this.state.sortedBy === 'score' ? 'voteScore' : 'timestamp',
+                ),
               ),
             ),
-            posts,
-          ).map(post => (
-            <BlogEntry
-              key={post.id}
-              {...post}
-              upVote={this.upVote}
-              downVote={this.downVote}
-              deletePost={this.deletePost}
-              editPost={this.editPost}
-            />
-          ))}
+            R.filter(post => post.deleted === false),
+          )(posts)}
         </Entries>
         <Buttons>
           <Button circular onClick={this.createPost}>

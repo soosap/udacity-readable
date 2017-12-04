@@ -18,6 +18,11 @@ export default function(state: State = {}, action: Action) {
           state[action.payload.id],
         ),
       };
+    case 'POST_DELETE_SUCCESS':
+      return {
+        ...state,
+        [action.payload]: { ...state[action.payload], deleted: true },
+      };
     default:
       return state;
   }

@@ -53,6 +53,15 @@ export type PostCastVoteSuccessAction = {
   payload: { direction: 'upVote' | 'downVote', id: $PropertyType<Post, 'id'> },
 };
 
+export type PostDeleteRequestAction = {
+  type: 'POST_DELETE_REQUEST',
+  payload: $PropertyType<Post, 'id'>,
+};
+export type PostDeleteSuccessAction = {
+  type: 'POST_DELETE_SUCCESS',
+  payload: $PropertyType<Post, 'id'>,
+};
+
 type CategoriesFetchRequestAction = { type: 'CATEGORIES_FETCH_REQUEST' };
 type CategoriesFetchSuccessAction = {
   type: 'CATEGORIES_FETCH_SUCCESS',
@@ -65,6 +74,8 @@ export type Action =
   | PostsFetchSuccessAction
   | PostCastVoteRequestAction
   | PostCastVoteSuccessAction
+  | PostDeleteRequestAction
+  | PostDeleteSuccessAction
   | CategoriesFetchRequestAction
   | CategoriesFetchSuccessAction;
 export type ActionType = $PropertyType<Action, 'type'>;
