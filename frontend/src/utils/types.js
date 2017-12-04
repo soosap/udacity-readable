@@ -39,14 +39,21 @@ export type Comments = { [key: $PropertyType<Comment, 'id'>]: Comment };
 |-----------------------------------------------------------
 */
 type PostsFetchRequestAction = { type: 'POSTS_FETCH_REQUEST' };
-
 type PostsFetchSuccessAction = {
   type: 'POSTS_FETCH_SUCCESS',
   payload: Posts,
 };
 
-type CategoriesFetchRequestAction = { type: 'CATEGORIES_FETCH_REQUEST' };
+export type PostCastVoteRequestAction = {
+  type: 'POST_CAST_VOTE_REQUEST',
+  payload: { direction: 'upVote' | 'downVote', id: $PropertyType<Post, 'id'> },
+};
+export type PostCastVoteSuccessAction = {
+  type: 'POST_CAST_VOTE_SUCCESS',
+  payload: { direction: 'upVote' | 'downVote', id: $PropertyType<Post, 'id'> },
+};
 
+type CategoriesFetchRequestAction = { type: 'CATEGORIES_FETCH_REQUEST' };
 type CategoriesFetchSuccessAction = {
   type: 'CATEGORIES_FETCH_SUCCESS',
   payload: Categories,
@@ -56,6 +63,8 @@ type CategoriesFetchSuccessAction = {
 export type Action =
   | PostsFetchRequestAction
   | PostsFetchSuccessAction
+  | PostCastVoteRequestAction
+  | PostCastVoteSuccessAction
   | CategoriesFetchRequestAction
   | CategoriesFetchSuccessAction;
 export type ActionType = $PropertyType<Action, 'type'>;

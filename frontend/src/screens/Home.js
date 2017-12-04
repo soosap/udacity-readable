@@ -20,13 +20,13 @@ const Header = styled.div`
 
 const Filters = styled.div`
   padding-left: 1rem;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
   display: flex;
   justify-content: center;
   align-items: flex-end;
 
   i {
-    padding-bottom: .15rem;
+    padding-bottom: 0.15rem;
   }
 `;
 
@@ -73,9 +73,33 @@ class Home extends React.Component<Props, State> {
     sortedBy: 'score',
   };
 
-  upVote = () => {};
+  upVote = (id: $PropertyType<Post, 'id'>) => {
+    console.log('vote up');
+    this.props.dispatch({
+      type: 'POST_CAST_VOTE_REQUEST',
+      payload: { direction: 'upVote', id },
+    });
+  };
 
-  downVote = () => {};
+  downVote = (id: $PropertyType<Post, 'id'>) => {
+    console.log('vote down');
+    this.props.dispatch({
+      type: 'POST_CAST_VOTE_REQUEST',
+      payload: { direction: 'downVote', id },
+    });
+  };
+
+  createPost = () => {
+    console.log('create post');
+  };
+
+  deletePost = (id: $PropertyType<Post, 'id'>) => {
+    console.log('delete post');
+  };
+
+  editPost = (id: $PropertyType<Post, 'id'>) => {
+    console.log('edit post');
+  };
 
   render() {
     const { posts, categories } = this.props;
@@ -111,11 +135,13 @@ class Home extends React.Component<Props, State> {
               {...post}
               upVote={this.upVote}
               downVote={this.downVote}
+              deletePost={this.deletePost}
+              editPost={this.editPost}
             />
           ))}
         </Entries>
         <Buttons>
-          <Button circular>
+          <Button circular onClick={this.createPost}>
             <Icon className="fa fa-plus fa-2x" aria-hidden="true" />
           </Button>
         </Buttons>

@@ -28,10 +28,15 @@ const Wrapper = styled.button`
 type Props = {
   children: React.Node,
   circular: boolean,
+  onClick: () => void,
 };
 
-const Button = ({ children, circular }: Props) => {
-  return <Wrapper circular={circular}>{children}</Wrapper>;
+const Button = ({ children, circular, onClick }: Props) => {
+  return (
+    <Wrapper onClick={onClick} circular={circular}>
+      {children}
+    </Wrapper>
+  );
 };
 
 export { Button };
