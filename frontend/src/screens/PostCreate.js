@@ -9,6 +9,7 @@ import type { Category, Dispatch } from '../utils/types';
 type Props = {
   dispatch: Dispatch,
   categories: Array<Category>,
+  history: Object,
 };
 type State = {};
 
@@ -20,7 +21,10 @@ class PostCreate extends React.Component<Props, State> {
   state = {};
 
   submit = (values: Object) => {
-    this.props.dispatch({ type: 'POST_CREATE_REQUEST', payload: values });
+    this.props.dispatch({
+      type: 'POST_CREATE_REQUEST',
+      payload: { post: values, history: this.props.history },
+    });
   };
 
   render() {
@@ -37,7 +41,7 @@ class PostCreate extends React.Component<Props, State> {
 const mapStateToProps = state => {
   return {
     categories: categories(state),
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps)(PostCreate);

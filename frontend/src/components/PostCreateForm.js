@@ -44,7 +44,7 @@ const PostCreateForm = ({
   return (
     <Form onSubmit={handleSubmit}>
       <Header>
-        <Back to="/">Back</Back>
+        <Back to="/">Home</Back>
       </Header>
       <div className="field">
         <label className="label">Title</label>

@@ -13,6 +13,7 @@ import castVotePost from './castVotePost';
 import castVoteComment from './castVoteComment';
 import deletePost from './deletePost';
 import createPost from './createPost';
+import editPost from './editPost';
 import deleteComment from './deleteComment';
 import fetchPostDetails from './fetchPostDetails';
 
@@ -38,6 +39,9 @@ function* rootSaga(): Generator<*, *, *> {
 
   type = 'POST_CREATE_REQUEST';
   yield takeLatest(type, createPost);
+
+  type = 'POST_EDIT_REQUEST';
+  yield takeLatest(type, editPost);
 
   type = 'COMMENT_CAST_VOTE_REQUEST';
   yield takeEvery(type, castVoteComment);

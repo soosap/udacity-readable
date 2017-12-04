@@ -68,7 +68,7 @@ class App extends React.Component<Props, State> {
               <Route path="/posts/create" component={PostCreate} />
               <Route path="/posts/:postId/edit" component={PostEdit} />            
               <Route
-                path="/category/:postId"
+                path="/:category/:postId"
                 component={PostDetails}
               />
               <Route path="/:category" component={Home} />              

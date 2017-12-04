@@ -11,19 +11,26 @@ type Props = {
   categories: Array<Category>,
   post: Post,
   match: Object,
+  history: Object,
 };
 type State = {};
 
 class PostEdit extends React.Component<Props, State> {
   componentDidMount() {
-    this.props.dispatch({ type: 'POST_FETCH_REQUEST', payload: this.props.match.params.postId });
+    this.props.dispatch({
+      type: 'POST_FETCH_REQUEST',
+      payload: this.props.match.params.postId,
+    });
     this.props.dispatch({ type: 'CATEGORIES_FETCH_REQUEST' });
   }
 
   state = {};
 
   submit = (values: Object) => {
-    // this.props.dispatch({ type: 'POST_EDIT_REQUEST', payload: values });
+    this.props.dispatch({
+      type: 'POST_EDIT_REQUEST',
+      payload: { post: values, history: this.props.history },
+    });
   };
 
   render() {

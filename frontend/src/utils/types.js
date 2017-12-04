@@ -58,10 +58,19 @@ export type PostFetchSuccessAction = {
 
 export type PostCreateRequestAction = {
   type: 'POST_CREATE_REQUEST',
-  payload: $Subtype<Post>,
+  payload: { post: $Subtype<Post>, history: Object },
 };
 export type PostCreateSuccessAction = {
   type: 'POST_CREATE_SUCCESS',
+  payload: Post,
+};
+
+export type PostEditRequestAction = {
+  type: 'POST_EDIT_REQUEST',
+  payload: { post: $Subtype<Post>, history: Object },
+};
+export type PostEditSuccessAction = {
+  type: 'POST_EDIT_SUCCESS',
   payload: Post,
 };
 
@@ -125,6 +134,8 @@ export type Action =
   | PostDeleteSuccessAction
   | PostCreateRequestAction
   | PostCreateSuccessAction
+  | PostEditRequestAction
+  | PostEditSuccessAction
   | CommentCastVoteRequestAction
   | CommentCastVoteSuccessAction
   | CommentDeleteRequestAction

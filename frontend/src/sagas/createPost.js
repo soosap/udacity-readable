@@ -15,10 +15,11 @@ const submitCreatePost = data => {
 };
 
 function* createPost(action: PostCreateRequestAction): Generator<*, *, *> {
+  const postId = uuid();
   const post = yield call(submitCreatePost, {
-    ...action.payload,
+    ...action.payload.post,
     timestamp: Date.now(),
-    id: uuid(),
+    id: postId,
   });
 
   const success: PostCreateSuccessAction = {
@@ -26,6 +27,8 @@ function* createPost(action: PostCreateRequestAction): Generator<*, *, *> {
     payload: post,
   };
   yield put(success);
+  const { category } = action.payload.post;
+  action.payload.history.push(`/${category}/${postId}`);
 }
 
 export default createPost;
