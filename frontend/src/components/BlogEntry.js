@@ -1,6 +1,7 @@
 /* @flow */
 import * as React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 import type { Post } from '../utils/types';
@@ -40,9 +41,10 @@ const Aside = styled.aside`
   padding-top: 0.5rem;
 `;
 
-const Title = styled.div`
+const Title = styled(Link)`
   font-weight: 600;
   font-size: 1.1rem;
+  color: black;
 `;
 
 const Icon = styled.i`
@@ -76,7 +78,7 @@ const BlogEntry = ({
   return (
     <Wrapper>
       <Main>
-        <Title>{title}</Title>
+        <Title to={`/posts/${id}`}>{title}</Title>
         <Subtitle>
           posted by <Author>{author}</Author> {moment(timestamp).fromNow()} |{' '}
           {commentCount} comments

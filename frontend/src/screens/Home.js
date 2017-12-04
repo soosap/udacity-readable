@@ -3,6 +3,8 @@ import * as React from 'react';
 import * as R from 'ramda';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+import { compose } from 'recompose';
 
 import { getAllPosts, getAllCategories } from '../selectors';
 import { BlogEntry, Tag, Button, Switch } from '../components';
@@ -58,6 +60,7 @@ type Props = {
   dispatch: Dispatch,
   posts: Array<Post>,
   categories: Array<Category>,
+  history: Object,
 };
 
 type State = {
@@ -88,10 +91,6 @@ class Home extends React.Component<Props, State> {
     });
   };
 
-  createPost = () => {
-    console.log('create post');
-  };
-
   deletePost = (id: $PropertyType<Post, 'id'>) => {
     this.props.dispatch({
       type: 'POST_DELETE_REQUEST',
@@ -100,11 +99,11 @@ class Home extends React.Component<Props, State> {
   };
 
   editPost = (id: $PropertyType<Post, 'id'>) => {
-    console.log('edit post');
+    this.props.history.push(`/posts/${id}/edit`);
   };
 
   render() {
-    const { posts, categories } = this.props;
+    const { posts, categories, history } = this.props;
 
     return (
       <Wrapper>
@@ -154,7 +153,7 @@ class Home extends React.Component<Props, State> {
           )(posts)}
         </Entries>
         <Buttons>
-          <Button circular onClick={this.createPost}>
+          <Button circular onClick={() => history.push('/posts/create')}>
             <Icon className="fa fa-plus fa-2x" aria-hidden="true" />
           </Button>
         </Buttons>
@@ -170,4 +169,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Home);
+export default compose(withRouter, connect(mapStateToProps))(Home);

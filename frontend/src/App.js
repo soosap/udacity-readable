@@ -1,6 +1,6 @@
 /* @flow */
 import * as React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import styled, { injectGlobal } from 'styled-components';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
@@ -65,11 +65,14 @@ class App extends React.Component<Props, State> {
           <Wrapper>
             <Route exact path="/" component={Home} />
             <Route path="/categories/:category" component={Category} />
-            <Route path="/categories/:category/posts" component={CreateEdit} />
-            <Route
-              path="/categories/:category/posts/:postId"
-              component={PostDetails}
-            />
+            <Switch>
+              <Route path="/posts/create" component={CreateEdit} />
+              <Route path="/posts/:postId/edit" component={CreateEdit} />            
+              <Route
+                path="/posts/:postId"
+                component={PostDetails}
+              />
+            </Switch>
           </Wrapper>
         </Router>
       </Provider>
