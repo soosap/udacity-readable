@@ -13,7 +13,7 @@ type Props = {
 };
 type State = {};
 
-class PostCreate extends React.Component<Props, State> {
+class PostEdit extends React.Component<Props, State> {
   componentDidMount() {
     this.props.dispatch({ type: 'CATEGORIES_FETCH_REQUEST' });
   }
@@ -21,13 +21,13 @@ class PostCreate extends React.Component<Props, State> {
   state = {};
 
   submit = (values: Object) => {
-    this.props.dispatch({ type: 'POST_CREATE_REQUEST', payload: values });
+    this.props.dispatch({ type: 'POST_EDIT_REQUEST', payload: values });
   };
 
   render() {
     return (
       <PostCreateForm
-        type="create"
+        type="edit"
         onSubmit={this.submit}
         categories={this.props.categories}
       />
@@ -38,7 +38,7 @@ class PostCreate extends React.Component<Props, State> {
 const mapStateToProps = state => {
   return {
     categories: categories(state),
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps)(PostCreate);
+export default connect(mapStateToProps)(PostEdit);

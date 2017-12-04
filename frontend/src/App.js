@@ -6,7 +6,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 
-import { Home, PostDetails, PostCreate } from './screens';
+import { Home, PostDetails, PostCreate, PostEdit } from './screens';
 import reducers from './reducers';
 import sagas from './sagas';
 
@@ -66,7 +66,7 @@ class App extends React.Component<Props, State> {
             <Route exact path="/" component={Home} />
             <Switch>
               <Route path="/posts/create" component={PostCreate} />
-              <Route path="/posts/:postId/edit" component={PostCreate} />            
+              <Route path="/posts/:postId/edit" component={PostEdit} />            
               <Route
                 path="/category/:postId"
                 component={PostDetails}

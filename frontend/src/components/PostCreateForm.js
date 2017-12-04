@@ -3,6 +3,7 @@ import * as React from 'react';
 import { reduxForm, Field, type FormProps } from 'redux-form';
 import styled from 'styled-components';
 
+import { Back } from '../components';
 import type { Category } from '../utils/types';
 
 const Form = styled.form`
@@ -22,15 +23,28 @@ const Form = styled.form`
   }
 `;
 
+const Header = styled.div`
+  margin-bottom: 1.8rem;
+`;
+
 type Props = {
   onSubmit: () => void,
   handleSubmit: Function,
   categories: Array<Category>,
+  type: 'create' | 'edit',
 };
 
-const PostCreateForm = ({ onSubmit, handleSubmit, categories }: Props) => {
+const PostCreateForm = ({
+  onSubmit,
+  handleSubmit,
+  categories,
+  type,
+}: Props) => {
   return (
     <Form onSubmit={handleSubmit}>
+      <Header>
+        <Back to="/">Back</Back>
+      </Header>
       <div className="field">
         <label className="label">Title</label>
         <div className="control">
@@ -84,7 +98,7 @@ const PostCreateForm = ({ onSubmit, handleSubmit, categories }: Props) => {
       </div>
       <div className="control">
         <button className="button is-link" type="submit">
-          Create post
+          {`${type === 'create' ? 'Create' : 'Edit'} post`}
         </button>
       </div>
     </Form>
