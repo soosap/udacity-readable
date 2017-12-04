@@ -1,5 +1,6 @@
 /* @flow */
 import * as React from 'react';
+import * as R from 'ramda';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
@@ -74,7 +75,6 @@ class Home extends React.Component<Props, State> {
   };
 
   upVote = (id: $PropertyType<Post, 'id'>) => {
-    console.log('vote up');
     this.props.dispatch({
       type: 'POST_CAST_VOTE_REQUEST',
       payload: { direction: 'upVote', id },
@@ -82,7 +82,6 @@ class Home extends React.Component<Props, State> {
   };
 
   downVote = (id: $PropertyType<Post, 'id'>) => {
-    console.log('vote down');
     this.props.dispatch({
       type: 'POST_CAST_VOTE_REQUEST',
       payload: { direction: 'downVote', id },
@@ -103,6 +102,7 @@ class Home extends React.Component<Props, State> {
 
   render() {
     const { posts, categories } = this.props;
+
     return (
       <Wrapper>
         <Header>
@@ -129,7 +129,14 @@ class Home extends React.Component<Props, State> {
           </Filters>
         </Header>
         <Entries>
-          {posts.map(post => (
+          {R.sort(
+            R.descend(
+              R.prop(
+                this.state.sortedBy === 'score' ? 'voteScore' : 'timestamp',
+              ),
+            ),
+            posts,
+          ).map(post => (
             <BlogEntry
               key={post.id}
               {...post}
