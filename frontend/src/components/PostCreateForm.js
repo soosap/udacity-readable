@@ -1,10 +1,10 @@
 /* @flow */
 import * as React from 'react';
-import { reduxForm, Field, type FormProps } from 'redux-form';
+import { reduxForm, Field } from 'redux-form';
 import styled from 'styled-components';
 
 import { Back } from '../components';
-import type { Category } from '../utils/types';
+import type { Category, Post } from '../utils/types';
 
 const Form = styled.form`
   padding: 2rem;
@@ -32,6 +32,7 @@ type Props = {
   handleSubmit: Function,
   categories: Array<Category>,
   type: 'create' | 'edit',
+  initialValues?: Post,
 };
 
 const PostCreateForm = ({
