@@ -38,11 +38,25 @@ export type Comments = { [key: $PropertyType<Comment, 'id'>]: Comment };
 | Redux-related type definitions
 |-----------------------------------------------------------
 */
-export type PostsFetchRequestAction = { type: 'POSTS_FETCH_REQUEST', payload?: string };
+export type PostsFetchRequestAction = {
+  type: 'POSTS_FETCH_REQUEST',
+  payload?: string,
+};
 export type PostsFetchSuccessAction = {
   type: 'POSTS_FETCH_SUCCESS',
   payload: Posts,
 };
+
+
+export type PostFetchRequestAction = {
+  type: 'POST_FETCH_REQUEST',
+  payload: $PropertyType<Post, 'id'>,
+};
+export type PostFetchSuccessAction = {
+  type: 'POST_FETCH_SUCCESS',
+  payload: { post: Post, comments: Comments },
+};
+
 
 export type PostCastVoteRequestAction = {
   type: 'POST_CAST_VOTE_REQUEST',
@@ -53,6 +67,7 @@ export type PostCastVoteSuccessAction = {
   payload: { direction: 'upVote' | 'downVote', id: $PropertyType<Post, 'id'> },
 };
 
+
 export type PostDeleteRequestAction = {
   type: 'POST_DELETE_REQUEST',
   payload: $PropertyType<Post, 'id'>,
@@ -61,6 +76,7 @@ export type PostDeleteSuccessAction = {
   type: 'POST_DELETE_SUCCESS',
   payload: $PropertyType<Post, 'id'>,
 };
+
 
 type CategoriesFetchRequestAction = { type: 'CATEGORIES_FETCH_REQUEST' };
 type CategoriesFetchSuccessAction = {
@@ -72,6 +88,8 @@ type CategoriesFetchSuccessAction = {
 export type Action =
   | PostsFetchRequestAction
   | PostsFetchSuccessAction
+  | PostFetchRequestAction
+  | PostFetchSuccessAction
   | PostCastVoteRequestAction
   | PostCastVoteSuccessAction
   | PostDeleteRequestAction

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { compose } from 'recompose';
 
-import { getPostsByCategory, getAllCategories } from '../selectors';
+import { getPosts, getCategories } from '../selectors';
 import { BlogEntry, Tag, Button, Switch } from '../components';
 import type { Dispatch, Post, Category } from '../utils/types';
 
@@ -179,8 +179,8 @@ class Home extends React.Component<Props, State> {
 
 const mapStateToProps = (state, props) => {
   return {
-    posts: getPostsByCategory(state, props.match.params.category),
-    categories: getAllCategories(state),
+    posts: getPosts(state),
+    categories: getCategories(state),
   };
 };
 

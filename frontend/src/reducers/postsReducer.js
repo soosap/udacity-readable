@@ -8,8 +8,10 @@ type State = {
 
 export default function(state: State = {}, action: Action) {
   switch (action.type) {
+    case 'POST_FETCH_SUCCESS':
+      return { ...state, [action.payload.post.id]: action.payload.post };
     case 'POSTS_FETCH_SUCCESS':
-      return action.payload;
+      return { ...state, ...action.payload };
     case 'POST_CAST_VOTE_SUCCESS':
       return {
         ...state,
