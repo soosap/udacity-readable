@@ -3,11 +3,11 @@ import * as React from 'react';
 import * as R from 'ramda';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 
-import { getPosts, getCategories } from '../selectors';
-import { BlogEntry, Tag, Button, Switch } from '../components';
+import { postsByCategory, categories } from '../selectors';
+import { BlogEntry, Tag, Button, Switch, Back } from '../components';
 import type { Dispatch, Post, Category } from '../utils/types';
 
 const Wrapper = styled.div`
@@ -54,14 +54,6 @@ const Buttons = styled.div`
 
 const Icon = styled.i`
   color: white;
-`;
-
-const Back = styled(Link)`
-  text-decoration: none;
-  color: gray;
-  display: inline-block;
-  padding-right: 0.5rem;
-  margin-top: 2px;
 `;
 
 type Props = {
@@ -116,6 +108,7 @@ class Home extends React.Component<Props, State> {
 
   render() {
     const { posts, categories, history } = this.props;
+    console.log('posts', posts);
 
     return (
       <Wrapper>
@@ -179,8 +172,8 @@ class Home extends React.Component<Props, State> {
 
 const mapStateToProps = (state, props) => {
   return {
-    posts: getPosts(state),
-    categories: getCategories(state),
+    posts: postsByCategory(state, props.match.params.category),
+    categories: categories(state),
   };
 };
 

@@ -11,6 +11,7 @@ type Props = Post & {
   downVote: (id: $PropertyType<Post, 'id'>) => void,
   deletePost: (id: $PropertyType<Post, 'id'>) => void,
   editPost: (id: $PropertyType<Post, 'id'>) => void,
+  showBody: boolean,
 };
 
 const Wrapper = styled.div`
@@ -19,10 +20,15 @@ const Wrapper = styled.div`
   padding: 0.5rem;
   padding-left: 1rem;
   display: flex;
+  flex-direction: column;
 
   &:last-child {
     border-bottom: 1px solid gray;
   }
+`;
+
+const Head = styled.div`
+  display: flex;
 `;
 
 const Main = styled.main`
@@ -48,8 +54,8 @@ const Title = styled(Link)`
 `;
 
 const Icon = styled.i`
-  padding-left: .1rem;
-  padding-right: .3rem;
+  padding-left: 0.1rem;
+  padding-right: 0.3rem;
   font-size: 14px !important;
 
   &:hover {
@@ -59,6 +65,10 @@ const Icon = styled.i`
 
 const Subtitle = styled.div``;
 
+const Body = styled.div`
+  color: darkgray;
+`;
+
 const Author = styled.em`
   color: gray;
 `;
@@ -66,6 +76,8 @@ const Author = styled.em`
 const BlogEntry = ({
   id,
   title,
+  body,
+  showBody,
   author,
   voteScore,
   commentCount,
@@ -77,28 +89,42 @@ const BlogEntry = ({
 }: Props) => {
   return (
     <Wrapper>
-      <Main>
-        <Title to={`/category/${id}`}>{title}</Title>
-        <Subtitle>
-          posted by <Author>{author}</Author> {moment(timestamp).fromNow()} |{' '}
-          {commentCount} comments
-          |{' '}
-          <Icon onClick={() => editPost(id)} className="fa fa-edit" aria-hidden="true" />
-          |{' '}
-          <Icon onClick={() => deletePost(id)} className="fa fa-trash" aria-hidden="true" />
-        </Subtitle>
-      </Main>
-      <Aside>
-        <button onClick={() => upVote(id)}>
-          <i className="fa fa-chevron-up" aria-hidden="true" />
-        </button>
-        <button onClick={() => downVote(id)}>
-          <i className="fa fa-chevron-down" aria-hidden="true" />
-        </button>
-        {voteScore}
-      </Aside>
+      <Head>
+        <Main>
+          <Title to={`/category/${id}`}>{title}</Title>
+          <Subtitle>
+            posted by <Author>{author}</Author> {moment(timestamp).fromNow()} |{' '}
+            {commentCount} comments |{' '}
+            <Icon
+              onClick={() => editPost(id)}
+              className="fa fa-edit"
+              aria-hidden="true"
+            />
+            |{' '}
+            <Icon
+              onClick={() => deletePost(id)}
+              className="fa fa-trash"
+              aria-hidden="true"
+            />
+          </Subtitle>
+        </Main>
+        <Aside>
+          <button onClick={() => upVote(id)}>
+            <i className="fa fa-chevron-up" aria-hidden="true" />
+          </button>
+          <button onClick={() => downVote(id)}>
+            <i className="fa fa-chevron-down" aria-hidden="true" />
+          </button>
+          {voteScore}
+        </Aside>
+      </Head>
+      {showBody && <Body>{body}</Body>}
     </Wrapper>
   );
+};
+
+BlogEntry.defaultProps = {
+  showBody: false,
 };
 
 export { BlogEntry };
