@@ -62,6 +62,11 @@ type Props = {
   categories: Array<Category>,
   history: Object,
   match: Object,
+  upVote: (id: $PropertyType<Post, 'id'>) => void,
+  downVote: (id: $PropertyType<Post, 'id'>) => void,
+  deletePost: (id: $PropertyType<Post, 'id'>) => void,
+  fetchPosts: (category?: $PropertyType<Category, 'name'>) => void,
+  fetchCategories: () => void,
 };
 
 type State = {
@@ -70,36 +75,12 @@ type State = {
 
 class Home extends React.Component<Props, State> {
   componentDidMount() {
-    this.props.dispatch({
-      type: 'POSTS_FETCH_REQUEST',
-      payload: this.props.match.params.category,
-    });
-    this.props.dispatch({ type: 'CATEGORIES_FETCH_REQUEST' });
+    this.props.fetchPosts(this.props.match.params.category);
+    this.props.fetchCategories();
   }
 
   state = {
     sortedBy: 'score',
-  };
-
-  upVote = (id: $PropertyType<Post, 'id'>) => {
-    this.props.dispatch({
-      type: 'POST_CAST_VOTE_REQUEST',
-      payload: { direction: 'upVote', id },
-    });
-  };
-
-  downVote = (id: $PropertyType<Post, 'id'>) => {
-    this.props.dispatch({
-      type: 'POST_CAST_VOTE_REQUEST',
-      payload: { direction: 'downVote', id },
-    });
-  };
-
-  deletePost = (id: $PropertyType<Post, 'id'>) => {
-    this.props.dispatch({
-      type: 'POST_DELETE_REQUEST',
-      payload: id,
-    });
   };
 
   editPost = (id: $PropertyType<Post, 'id'>) => {
@@ -112,9 +93,7 @@ class Home extends React.Component<Props, State> {
     return (
       <Wrapper>
         <Header>
-          {this.props.match.params.category && (
-            <Back to="/" />
-          )}
+          {this.props.match.params.category && <Back to="/" />}
           <Categories>
             {categories.map(category => (
               <Tag key={category.name} to={`/${category.path}`}>
@@ -143,9 +122,9 @@ class Home extends React.Component<Props, State> {
               <BlogEntry
                 key={post.id}
                 {...post}
-                upVote={this.upVote}
-                downVote={this.downVote}
-                deletePost={this.deletePost}
+                upVote={this.props.upVote}
+                downVote={this.props.downVote}
+                deletePost={this.props.deletePost}
                 editPost={this.editPost}
               />
             )),
@@ -176,4 +155,34 @@ const mapStateToProps = (state, props) => {
   };
 };
 
-export default compose(withRouter, connect(mapStateToProps))(Home);
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    dispatch,
+    upVote: (id: $PropertyType<Post, 'id'>) =>
+      dispatch({
+        type: 'POST_CAST_VOTE_REQUEST',
+        payload: { direction: 'upVote', id },
+      }),
+    downVote: (id: $PropertyType<Post, 'id'>) =>
+      dispatch({
+        type: 'POST_CAST_VOTE_REQUEST',
+        payload: { direction: 'downVote', id },
+      }),
+    deletePost: (id: $PropertyType<Post, 'id'>) =>
+      dispatch({
+        type: 'POST_DELETE_REQUEST',
+        payload: id,
+      }),
+    fetchPosts: (category?: $PropertyType<Category, 'name'>) =>
+      dispatch({
+        type: 'POSTS_FETCH_REQUEST',
+        payload: category,
+      }),
+    fetchCategories: () => dispatch({ type: 'CATEGORIES_FETCH_REQUEST' }),
+  };
+};
+
+export default compose(
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps),
+)(Home);
