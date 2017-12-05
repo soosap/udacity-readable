@@ -8,3 +8,14 @@
     - `cd frontend`
     - `npm install`
     - `npm start`
+
+## Technology stack
+
+* react
+* redux
+* redux-saga
+* redux-form
+* ramda
+* reselect
+* flowtype
+* styled-components
