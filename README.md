@@ -19,3 +19,7 @@
 * reselect
 * flowtype
 * styled-components
+
+## Backend API
+
+https://github.com/udacity/reactnd-project-readable-starter/blob/master/api-server/README.md
