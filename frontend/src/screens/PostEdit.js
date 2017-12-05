@@ -19,7 +19,10 @@ class PostEdit extends React.Component<Props, State> {
   componentDidMount() {
     this.props.dispatch({
       type: 'POST_FETCH_REQUEST',
-      payload: this.props.match.params.postId,
+      payload: {
+        id: this.props.match.params.postId,
+        history: this.props.history,
+      },
     });
     this.props.dispatch({ type: 'CATEGORIES_FETCH_REQUEST' });
   }
