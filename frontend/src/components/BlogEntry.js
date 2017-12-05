@@ -77,6 +77,7 @@ const BlogEntry = ({
   id,
   title,
   body,
+  category,
   showBody,
   author,
   voteScore,
@@ -91,7 +92,7 @@ const BlogEntry = ({
     <Wrapper>
       <Head>
         <Main>
-          <Title to={`/category/${id}`}>{title}</Title>
+          <Title to={`/${category}/${id}`}>{title}</Title>
           <Subtitle>
             posted by <Author>{author}</Author> {moment(timestamp).fromNow()} |{' '}
             {commentCount} comments |{' '}
