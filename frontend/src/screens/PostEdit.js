@@ -26,7 +26,7 @@ class PostEdit extends React.Component<Props, State> {
 
   state = {};
 
-  submit = (values: Object) => {
+  submit = (values: $Subtype<Post>) => {
     this.props.dispatch({
       type: 'POST_EDIT_REQUEST',
       payload: { post: values, history: this.props.history },

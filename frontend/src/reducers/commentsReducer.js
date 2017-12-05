@@ -9,6 +9,9 @@ type State = {
 
 export default function(state: State = {}, action: Action) {
   switch (action.type) {
+    case 'COMMENT_CREATE_SUCCESS':
+    case 'COMMENT_EDIT_SUCCESS':
+      return { ...state, [action.payload.id]: action.payload };
     case 'POST_FETCH_SUCCESS':
       return action.payload.comments;
     case 'COMMENT_CAST_VOTE_SUCCESS':

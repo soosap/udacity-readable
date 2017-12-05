@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { categories } from '../selectors';
 import { PostCreateForm } from '../components';
-import type { Category, Dispatch } from '../utils/types';
+import type { Category, Dispatch, Post } from '../utils/types';
 
 type Props = {
   dispatch: Dispatch,
@@ -20,7 +20,7 @@ class PostCreate extends React.Component<Props, State> {
 
   state = {};
 
-  submit = (values: Object) => {
+  submit = (values: $Subtype<Post>) => {
     this.props.dispatch({
       type: 'POST_CREATE_REQUEST',
       payload: { post: values, history: this.props.history },

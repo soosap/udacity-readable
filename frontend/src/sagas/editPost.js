@@ -13,7 +13,7 @@ const submitEditPost = data => {
   });
 };
 
-function* createPost(action: PostEditRequestAction): Generator<*, *, *> {
+function* editPost(action: PostEditRequestAction): Generator<*, *, *> {
   const response = yield call(submitEditPost, action.payload.post);
 
   const success: PostEditSuccessAction = {
@@ -25,4 +25,4 @@ function* createPost(action: PostEditRequestAction): Generator<*, *, *> {
   action.payload.history.push(`/${category}/${id}`);
 }
 
-export default createPost;
+export default editPost;

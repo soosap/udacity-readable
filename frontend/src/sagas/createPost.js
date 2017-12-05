@@ -16,15 +16,17 @@ const submitCreatePost = data => {
 
 function* createPost(action: PostCreateRequestAction): Generator<*, *, *> {
   const postId = uuid();
-  const post = yield call(submitCreatePost, {
+  const response = yield call(submitCreatePost, {
     ...action.payload.post,
     timestamp: Date.now(),
     id: postId,
   });
 
+  console.log('response', response);
+
   const success: PostCreateSuccessAction = {
     type: 'POST_CREATE_SUCCESS',
-    payload: post,
+    payload: response.data,
   };
   yield put(success);
   const { category } = action.payload.post;

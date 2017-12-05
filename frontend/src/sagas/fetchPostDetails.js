@@ -28,11 +28,14 @@ function* fetchPostDetails(action: PostFetchRequestAction): Generator<*, *, *> {
   ]);
 
   const post: Post = postResponse.data;
+  console.log('post', post);
 
   const comments: Comments = commentsResponse.data.reduce((acc, comment) => {
     acc[comment.id] = comment;
     return acc;
   }, {});
+  console.log('commentsResponse.data', commentsResponse.data);
+  console.log('comments', comments);
 
   const success: PostFetchSuccessAction = {
     type: 'POST_FETCH_SUCCESS',

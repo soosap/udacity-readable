@@ -13,7 +13,7 @@ const Wrapper = styled.button`
   background-color: teal;
   padding-top: 0.5rem;
   border: none;
-  transition: all 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
 
   &:focus {
     outline: none;
@@ -29,11 +29,12 @@ type Props = {
   children: React.Node,
   circular: boolean,
   onClick: () => void,
+  style?: Object,
 };
 
-const Button = ({ children, circular, onClick }: Props) => {
+const Button = ({ children, circular, onClick, style }: Props) => {
   return (
-    <Wrapper onClick={onClick} circular={circular}>
+    <Wrapper style={style} onClick={onClick} circular={circular}>
       {children}
     </Wrapper>
   );

@@ -6,7 +6,13 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 
-import { BlogEntry, Back, BlogEntryComment, Button } from '../components';
+import {
+  Back,
+  Button,
+  BlogEntry,
+  BlogEntryComment,
+  CommentCreateForm,
+} from '../components';
 import { postById, commentsForPost } from '../selectors';
 import type { Dispatch, Post, Comment } from '../utils/types';
 
@@ -20,7 +26,7 @@ const Wrapper = styled.div`
 `;
 
 const Header = styled.div`
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.7rem;
 `;
 
 const Main = styled.main``;
@@ -40,6 +46,13 @@ const Comments = styled.div`
   align-items: stretch;
 `;
 
+const CommentFormContainer = styled.div`
+  border-left: 1px solid gray;
+  border-right: 1px solid gray;
+  border-bottom: ${props => (props.hasComments ? 'none' : '1px solid gray')};
+  padding: 1rem;
+`;
+
 const Icon = styled.i`
   color: white;
 `;
@@ -52,7 +65,8 @@ type Props = {
   comments: Array<Comment>,
 };
 type State = {
-  showCommentBox: boolean,
+  showCommentForm: boolean,
+  commentFormType: 'create' | 'edit',
 };
 
 class PostDetails extends React.Component<Props, State> {
@@ -64,7 +78,8 @@ class PostDetails extends React.Component<Props, State> {
   }
 
   state = {
-    showCommentBox: false,
+    showCommentForm: false,
+    commentFormType: 'create',
   };
 
   upVotePost = (id: $PropertyType<Post, 'id'>) => {
@@ -106,15 +121,24 @@ class PostDetails extends React.Component<Props, State> {
     this.props.history.push(`/posts/${id}/edit`);
   };
 
+  createComment = (values: $Subtype<Comment>) => {
+    this.props.dispatch({
+      type: 'COMMENT_CREATE_REQUEST',
+      payload: { comment: values, parentId: this.props.post.id },
+    });
+    this.setState({ showCommentForm: false });
+  };
+
   deleteComment = (id: $PropertyType<Comment, 'id'>) => {
     this.props.dispatch({ type: 'COMMENT_DELETE_REQUEST', payload: id });
   };
 
   editComment = (id: $PropertyType<Comment, 'id'>) => {};
 
-  openCommentBox = () => {
-    console.log('opening comment box');
-    this.setState({ showCommentBox: true });
+  toggleCommentForm = () => {
+    this.setState(
+      R.evolve({ showCommentForm: R.not, commentFormType: 'create' }),
+    );
   };
 
   render() {
@@ -135,10 +159,30 @@ class PostDetails extends React.Component<Props, State> {
           />
         </Main>
         <Body>
-          <Button circular onClick={this.openCommentBox}>
-            <Icon className="fa fa-plus fa-2x" aria-hidden="true" />
+          <Button
+            circular
+            onClick={this.toggleCommentForm}
+            style={{
+              paddingTop: this.state.showCommentForm ? '.2rem' : '.5rem',
+            }}
+          >
+            <Icon
+              className={`fa fa-${
+                this.state.showCommentForm ? 'times' : 'plus'
+              } fa-2x`}
+              aria-hidden="true"
+            />
           </Button>
           <Comments>
+            {this.state.showCommentForm && (
+              <CommentFormContainer hasComments={comments.length > 0}>
+                <CommentCreateForm
+                  type={this.state.commentFormType}
+                  onSubmit={this.createComment}
+                  initialValues={null}
+                />
+              </CommentFormContainer>
+            )}
             {R.compose(
               R.map(comment => (
                 <BlogEntryComment

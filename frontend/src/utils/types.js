@@ -34,8 +34,14 @@ export type Comment = {
 export type Comments = { [key: $PropertyType<Comment, 'id'>]: Comment };
 
 /*
+|--------------------------------------------------------------------------
+| Redux - Redux - Redux - Redux - Redux - Redux - Redux - Redux - Redux -
+|--------------------------------------------------------------------------
+*/
+
+/*
 |-----------------------------------------------------------
-| Redux-related type definitions
+| Post
 |-----------------------------------------------------------
 */
 export type PostsFetchRequestAction = {
@@ -92,6 +98,11 @@ export type PostDeleteSuccessAction = {
   payload: $PropertyType<Post, 'id'>,
 };
 
+/*
+|-----------------------------------------------------------
+| Comment
+|-----------------------------------------------------------
+*/
 export type CommentCastVoteRequestAction = {
   type: 'COMMENT_CAST_VOTE_REQUEST',
   payload: {
@@ -107,6 +118,24 @@ export type CommentCastVoteSuccessAction = {
   },
 };
 
+export type CommentCreateRequestAction = {
+  type: 'COMMENT_CREATE_REQUEST',
+  payload: { comment: $Subtype<Comment>, parentId: $PropertyType<Post, 'id'> },
+};
+export type CommentCreateSuccessAction = {
+  type: 'COMMENT_CREATE_SUCCESS',
+  payload: Comment,
+};
+
+export type CommentEditRequestAction = {
+  type: 'COMMENT_EDIT_REQUEST',
+  payload: $Subtype<Comment>,
+};
+export type CommentEditSuccessAction = {
+  type: 'COMMENT_EDIT_SUCCESS',
+  payload: Comment,
+};
+
 export type CommentDeleteRequestAction = {
   type: 'COMMENT_DELETE_REQUEST',
   payload: $PropertyType<Comment, 'id'>,
@@ -116,6 +145,11 @@ export type CommentDeleteSuccessAction = {
   payload: $PropertyType<Comment, 'id'>,
 };
 
+/*
+|-----------------------------------------------------------
+| Category
+|-----------------------------------------------------------
+*/
 type CategoriesFetchRequestAction = { type: 'CATEGORIES_FETCH_REQUEST' };
 type CategoriesFetchSuccessAction = {
   type: 'CATEGORIES_FETCH_SUCCESS',
@@ -140,6 +174,10 @@ export type Action =
   | CommentCastVoteSuccessAction
   | CommentDeleteRequestAction
   | CommentDeleteSuccessAction
+  | CommentCreateRequestAction
+  | CommentCreateSuccessAction
+  | CommentEditRequestAction
+  | CommentEditSuccessAction
   | CategoriesFetchRequestAction
   | CategoriesFetchSuccessAction;
 export type ActionType = $PropertyType<Action, 'type'>;
