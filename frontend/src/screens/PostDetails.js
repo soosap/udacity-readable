@@ -67,6 +67,7 @@ type Props = {
 type State = {
   showCommentForm: boolean,
   commentFormType: 'create' | 'edit',
+  initialValues: ?Comment,
 };
 
 class PostDetails extends React.Component<Props, State> {
@@ -80,6 +81,7 @@ class PostDetails extends React.Component<Props, State> {
   state = {
     showCommentForm: false,
     commentFormType: 'create',
+    initialValues: null,
   };
 
   upVotePost = (id: $PropertyType<Post, 'id'>) => {
@@ -129,16 +131,28 @@ class PostDetails extends React.Component<Props, State> {
     this.setState({ showCommentForm: false });
   };
 
+  editComment = (id: $PropertyType<Comment, 'id'>) => {
+    const initialValues = this.props.comments.find(comment => {
+      return comment.id === id;
+    });
+    this.setState({
+      showCommentForm: true,
+      commentFormType: 'edit',
+      initialValues,
+    });
+  };
+
   deleteComment = (id: $PropertyType<Comment, 'id'>) => {
     this.props.dispatch({ type: 'COMMENT_DELETE_REQUEST', payload: id });
   };
 
-  editComment = (id: $PropertyType<Comment, 'id'>) => {};
-
   toggleCommentForm = () => {
-    this.setState(
-      R.evolve({ showCommentForm: R.not, commentFormType: 'create' }),
-    );
+    this.setState(state => ({
+      showCommentForm: !state.showCommentForm,
+      commentFormType: 'create',
+      initialValues:
+        !state.showCommentForm === false ? null : state.initialValues,
+    }));
   };
 
   render() {
@@ -179,7 +193,7 @@ class PostDetails extends React.Component<Props, State> {
                 <CommentCreateForm
                   type={this.state.commentFormType}
                   onSubmit={this.createComment}
-                  initialValues={null}
+                  initialValues={this.state.initialValues}
                 />
               </CommentFormContainer>
             )}

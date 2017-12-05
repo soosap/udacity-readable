@@ -54,4 +54,5 @@ const CommentCreateForm = ({ onSubmit, handleSubmit, type }: Props) => {
 
 export default reduxForm({
   form: 'COMMENT_CREATE_FORM',
+  enableReinitialize: true,
 })(CommentCreateForm);
