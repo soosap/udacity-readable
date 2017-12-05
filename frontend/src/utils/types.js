@@ -55,7 +55,7 @@ export type PostsFetchSuccessAction = {
 
 export type PostFetchRequestAction = {
   type: 'POST_FETCH_REQUEST',
-  payload: $PropertyType<Post, 'id'>,
+  payload: { id: $PropertyType<Post, 'id'>, history: Object },
 };
 export type PostFetchSuccessAction = {
   type: 'POST_FETCH_SUCCESS',

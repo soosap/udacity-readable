@@ -23,11 +23,12 @@ const getCommentsForPost = (id: string) => {
 
 function* fetchPostDetails(action: PostFetchRequestAction): Generator<*, *, *> {
   const [postResponse, commentsResponse] = yield all([
-    call(getPostById, action.payload),
-    call(getCommentsForPost, action.payload),
+    call(getPostById, action.payload.id),
+    call(getCommentsForPost, action.payload.id),
   ]);
 
   const post: Post = postResponse.data;
+  if (!post) action.payload.history.push('/');
 
   const comments: Comments = commentsResponse.data.reduce((acc, comment) => {
     acc[comment.id] = comment;

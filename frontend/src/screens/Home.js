@@ -81,6 +81,23 @@ class Home extends React.Component<Props, State> {
 
   state = {
     sortedBy: 'score',
+    // TODO: Move sorting and filtering out of render method.
+    // render may be called many times and the sorting and filtering
+    // could be compute intensive for large lists. It would be best
+    // to handle these kind of operations outside of render, i.e. in
+    // connect or more precisely in our selectors.
+    // Therefore this sortedBy local component state should be moved
+    // to global redux state.
+
+    // The code in our render also becomes more readable, i.e.
+    // {this.props.posts.map(post => <BlogEntry
+    //   key={post.id}
+    //   {...post}
+    //   upVote={this.props.upVote}
+    //   downVote={this.props.downVote}
+    //   deletePost={this.props.deletePost}
+    //   editPost={this.editPost}
+    // />}
   };
 
   editPost = (id: $PropertyType<Post, 'id'>) => {

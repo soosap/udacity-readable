@@ -72,9 +72,10 @@ type State = {
 
 class PostDetails extends React.Component<Props, State> {
   componentDidMount() {
+    const postId: string = this.props.match.params.postId;
     this.props.dispatch({
       type: 'POST_FETCH_REQUEST',
-      payload: this.props.match.params.postId,
+      payload: { id: postId, history: this.props.history },
     });
   }
 
