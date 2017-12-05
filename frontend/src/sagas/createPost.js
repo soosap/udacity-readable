@@ -22,8 +22,6 @@ function* createPost(action: PostCreateRequestAction): Generator<*, *, *> {
     id: postId,
   });
 
-  console.log('response', response);
-
   const success: PostCreateSuccessAction = {
     type: 'POST_CREATE_SUCCESS',
     payload: response.data,

@@ -129,7 +129,7 @@ export type CommentCreateSuccessAction = {
 
 export type CommentEditRequestAction = {
   type: 'COMMENT_EDIT_REQUEST',
-  payload: $Subtype<Comment>,
+  payload: Comment,
 };
 export type CommentEditSuccessAction = {
   type: 'COMMENT_EDIT_SUCCESS',

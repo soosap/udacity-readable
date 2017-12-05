@@ -128,18 +128,15 @@ class PostDetails extends React.Component<Props, State> {
       type: 'COMMENT_CREATE_REQUEST',
       payload: { comment: values, parentId: this.props.post.id },
     });
-    this.setState({ showCommentForm: false });
+    this.setState({ showCommentForm: false, initialValues: null });
   };
 
-  editComment = (id: $PropertyType<Comment, 'id'>) => {
-    const initialValues = this.props.comments.find(comment => {
-      return comment.id === id;
+  editComment = (values: Comment) => {
+    this.props.dispatch({
+      type: 'COMMENT_EDIT_REQUEST',
+      payload: values,
     });
-    this.setState({
-      showCommentForm: true,
-      commentFormType: 'edit',
-      initialValues,
-    });
+    this.setState({ showCommentForm: false, initialValues: null });
   };
 
   deleteComment = (id: $PropertyType<Comment, 'id'>) => {
@@ -153,6 +150,17 @@ class PostDetails extends React.Component<Props, State> {
       initialValues:
         !state.showCommentForm === false ? null : state.initialValues,
     }));
+  };
+
+  openCommentFormInEditMode = (id: $PropertyType<Comment, 'id'>) => {
+    const initialValues = this.props.comments.find(comment => {
+      return comment.id === id;
+    });
+    this.setState({
+      showCommentForm: true,
+      commentFormType: 'edit',
+      initialValues,
+    });
   };
 
   render() {
@@ -192,7 +200,11 @@ class PostDetails extends React.Component<Props, State> {
               <CommentFormContainer hasComments={comments.length > 0}>
                 <CommentCreateForm
                   type={this.state.commentFormType}
-                  onSubmit={this.createComment}
+                  onSubmit={
+                    this.state.commentFormType === 'create'
+                      ? this.createComment
+                      : this.editComment
+                  }
                   initialValues={this.state.initialValues}
                 />
               </CommentFormContainer>
@@ -203,7 +215,7 @@ class PostDetails extends React.Component<Props, State> {
                   key={comment.id}
                   {...comment}
                   deleteComment={this.deleteComment}
-                  editComment={this.editComment}
+                  editComment={this.openCommentFormInEditMode}
                   upVote={this.upVoteComment}
                   downVote={this.downVoteComment}
                 />
