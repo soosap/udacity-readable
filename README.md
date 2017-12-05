@@ -9,8 +9,8 @@
     - `npm install`
     - `npm start`
 
-
-
+<br />
+<br />
 
 ![Demo](./demo.gif)
 
