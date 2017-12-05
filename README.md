@@ -9,6 +9,8 @@
     - `npm install`
     - `npm start`
 
+![Demo](./demo.gif)
+
 ## Technology stack
 
 * react
