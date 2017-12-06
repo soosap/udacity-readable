@@ -120,7 +120,7 @@ app.use((req, res, next) => {
   } else {
     res.status(403).send({
       error:
-        'Please provide an Authorization header to identify yourself (can be whatever you want)',
+        'Please provide an Authorization header to identify yourself (can be whatever you want)'
     });
   }
 });
@@ -131,9 +131,9 @@ app.get('/api/categories', (req, res) => {
     error => {
       console.error(error);
       res.status(500).send({
-        error: 'There was an error.',
+        error: 'There was an error.'
       });
-    },
+    }
   );
 });
 
@@ -143,9 +143,9 @@ app.get('/api/:category/posts', (req, res) => {
     error => {
       console.error(error);
       res.status(500).send({
-        error: 'There was an error.',
+        error: 'There was an error.'
       });
-    },
+    }
   );
 });
 
@@ -155,9 +155,9 @@ app.get('/api/posts', (req, res) => {
     error => {
       console.error(error);
       res.status(500).send({
-        error: 'There was an error.',
+        error: 'There was an error.'
       });
-    },
+    }
   );
 });
 
@@ -167,9 +167,9 @@ app.post('/api/posts', bodyParser.json(), (req, res) => {
     error => {
       console.error(error);
       res.status(500).send({
-        error: 'There was an error.',
+        error: 'There was an error.'
       });
-    },
+    }
   );
 });
 
@@ -179,9 +179,9 @@ app.get('/api/posts/:id', (req, res) => {
     error => {
       console.error(error);
       res.status(500).send({
-        error: 'There was an error.',
+        error: 'There was an error.'
       });
-    },
+    }
   );
 });
 
@@ -194,9 +194,9 @@ app.delete('/api/posts/:id', (req, res) => {
       error => {
         console.error(error);
         res.status(500).send({
-          error: 'There was an error.',
+          error: 'There was an error.'
         });
-      },
+      }
     );
 });
 
@@ -208,9 +208,9 @@ app.post('/api/posts/:id', bodyParser.json(), (req, res) => {
     error => {
       console.error(error);
       res.status(500).send({
-        error: 'There was an error.',
+        error: 'There was an error.'
       });
-    },
+    }
   );
 });
 
@@ -220,9 +220,9 @@ app.put('/api/posts/:id', bodyParser.json(), (req, res) => {
     error => {
       console.error(error);
       res.status(500).send({
-        error: 'There was an error.',
+        error: 'There was an error.'
       });
-    },
+    }
   );
 });
 
@@ -232,9 +232,9 @@ app.get('/api/posts/:id/comments', (req, res) => {
     error => {
       console.error(error);
       res.status(500).send({
-        error: 'There was an error.',
+        error: 'There was an error.'
       });
-    },
+    }
   );
 });
 
@@ -244,9 +244,9 @@ app.get('/api/comments/:id', (req, res) => {
     error => {
       console.error(error);
       res.status(500).send({
-        error: 'There was an error.',
+        error: 'There was an error.'
       });
-    },
+    }
   );
 });
 
@@ -256,9 +256,9 @@ app.put('/api/comments/:id', bodyParser.json(), (req, res) => {
     error => {
       console.error(error);
       res.status(500).send({
-        error: 'There was an error.',
+        error: 'There was an error.'
       });
-    },
+    }
   );
 });
 
@@ -268,9 +268,9 @@ app.post('/api/comments', bodyParser.json(), (req, res) => {
     error => {
       console.error(error);
       res.status(500).send({
-        error: 'There was an error.',
+        error: 'There was an error.'
       });
-    },
+    }
   );
 });
 
@@ -281,9 +281,9 @@ app.post('/api/comments/:id', bodyParser.json(), (req, res) => {
     error => {
       console.error(error);
       res.status(500).send({
-        error: 'There was an error.',
+        error: 'There was an error.'
       });
-    },
+    }
   );
 });
 
@@ -293,9 +293,9 @@ app.delete('/api/comments/:id', (req, res) => {
     error => {
       console.error(error);
       res.status(500).send({
-        error: 'There was an error.',
+        error: 'There was an error.'
       });
-    },
+    }
   );
 });
 
