@@ -118,6 +118,7 @@ class PostDetails extends React.Component<Props, State> {
       type: 'POST_DELETE_REQUEST',
       payload: id,
     });
+    this.props.history.push('/');
   };
 
   editPost = (id: $PropertyType<Post, 'id'>) => {
