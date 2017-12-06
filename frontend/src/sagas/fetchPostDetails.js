@@ -28,7 +28,7 @@ function* fetchPostDetails(action: PostFetchRequestAction): Generator<*, *, *> {
   ]);
 
   const post: Post = postResponse.data;
-  if (!post) action.payload.history.push('/');
+  if (!post.id) action.payload.history.push('/');
 
   const comments: Comments = commentsResponse.data.reduce((acc, comment) => {
     acc[comment.id] = comment;
